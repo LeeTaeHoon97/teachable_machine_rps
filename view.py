@@ -1,4 +1,4 @@
-from cProfile import label
+# from cProfile import label
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
@@ -11,10 +11,11 @@ from PyQt5 import QtWidgets
 
 import threading
 import random
-
+from model import rpsNet
+from myGame import RPS_game
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
-form_class = uic.loadUiType("ui/untitle.ui")[0]
+form_class = uic.loadUiType("untitle.ui")[0]
 
 #화면을 띄우는데 사용되는 Class 선언
 class WindowClass(QMainWindow, form_class) :
@@ -22,25 +23,26 @@ class WindowClass(QMainWindow, form_class) :
         super().__init__()
         self.setupUi(self)
         running = False
-
+        self.pred=None
+        self.img=None
+        self.myModel = rpsNet()
         self.btn.clicked.connect(self.loadImageFromFile)
         self.start()
         
     
     def run(self):
         global running
-        cap = cv2.VideoCapture(-1)
-        print("cam : ",cap)
-        width=cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        height=cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.cam.resize(width,height)
+        cap = cv2.VideoCapture(0)
+        self.cam.resize(224,224)
 
         while running:
             ret, img=cap.read()
             if ret:
-                img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-                h,w,c=img.shape
-                qImg=QtGui.QImage(img.data,w,h,w*c,QtGui.QImage.Format_RGB888)
+                img=cv2.resize(img,(224,224))
+                self.img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+                self.img = cv2.flip(self.img,1)
+                h,w,c=self.img.shape
+                qImg=QtGui.QImage(self.img.data,w,h,w*c,QtGui.QImage.Format_RGB888)
                 pixmap=QtGui.QPixmap.fromImage(qImg)
                 self.cam.setPixmap(pixmap)
             # else:
@@ -68,8 +70,10 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar.load(f"imgs\{rps_lst[index]}.jpg")
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(224)
         self.center.setPixmap(self.qPixmapFileVar)
-
-   
+        self.pred=self.myModel.predict(self.img)
+        print(self.pred)
+        my_game=RPS_game(rps_lst[index],self.pred)
+        self.score.setText(my_game.match())
 
 
 
