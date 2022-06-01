@@ -1,5 +1,5 @@
 from tensorflow.keras.models import load_model
-from PIL import Image, ImageOps
+# from PIL import Image, ImageOps
 import numpy as np
 import cv2
 class rpsNet:
