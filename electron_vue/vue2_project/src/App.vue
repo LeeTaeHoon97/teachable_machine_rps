@@ -7,12 +7,15 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld";
-
+// import { PythonShell } from "python-shell";
 export default {
   name: "App",
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+    
+      
+  },
+
 };
 </script>
 
