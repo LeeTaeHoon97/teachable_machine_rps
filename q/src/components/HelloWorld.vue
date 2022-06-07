@@ -85,19 +85,25 @@ export default {
     },
   },
   methods: {
+    
     onCapture() {
-    let options = {
-      scriptPath: "./src/my_py/",
-      args: [1, 2]
-    };
-    PythonShell.run("run.py", options, (err, data) => {
-      if (err) throw err;
-
-      console.log(data);
+      this.img = this.$refs.webcam.capture();
+       var a = document.createElement("a"); //Create <a>
+        a.href = "data:image/png;base64," + this.img; //Image Base64 Goes here
+        a.download = "Image.png"; //File name Here
+        a.click(); //Downloaded file
       
-    });
+      let options = {
+        scriptPath: "./src/my_py/",
+        args: [1, 2]
+      };
+      PythonShell.run("run.py", options, (err, data) => {
+        if (err) throw err;
 
-      // this.img = this.$refs.webcam.capture();
+        console.log(data);
+        
+      });
+
       // console.log(this.img);
       // this.img.download();
       

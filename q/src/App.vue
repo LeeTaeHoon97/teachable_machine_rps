@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="q-app">
     <!-- <img width="25%" src="./assets/logo.png"> -->
     <HelloWorld/>
   </div>
