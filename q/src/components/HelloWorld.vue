@@ -10,7 +10,7 @@
         <web-cam
           ref="webcam"
           :device-id="deviceId"
-          width="100%"
+          width="100rem"
           @started="onStarted"
           @stopped="onStopped"
           @error="onError"
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-// import { WebCam } from "vue-web-cam";
+import { WebCam } from "vue-web-cam";
 import { find, head } from "lodash";
 import {PythonShell} from 'python-shell';
 
 export default {
   name: "HelloWorld",
   components: {
-    // WebCam,
+    WebCam,
   },
   data() {
     return {
