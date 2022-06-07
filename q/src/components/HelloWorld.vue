@@ -88,10 +88,11 @@ export default {
     
     onCapture() {
       this.img = this.$refs.webcam.capture();
-      //  var a = document.createElement("a"); //Create <a>
-      //   a.href = "data:image/png;base64," + this.img; //Image Base64 Goes here
-      //   a.download = "Image.png"; //File name Here
-      //   a.click(); //Downloaded file
+
+       var a = document.createElement("a"); //Create <a>
+        a.href =  this.img; //Image Base64 Goes here
+        a.download = "Image.png"; //File name Here
+        a.click(); //Downloaded file
       
       let options = {
         scriptPath: "./src/my_py/",
