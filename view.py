@@ -33,7 +33,7 @@ class WindowClass(QMainWindow, form_class) :
     def run(self):
         global running
         cap = cv2.VideoCapture(0)
-        self.cam.resize(224,224)
+        self.cam.resize(510,280)
 
         while running:
             ret, img=cap.read()
@@ -67,11 +67,14 @@ class WindowClass(QMainWindow, form_class) :
         rps_lst= ['R','P','S']
         index= random.randint(0,2)
         self.qPixmapFileVar = QtGui.QPixmap()
-        self.qPixmapFileVar.load(f"imgs\{rps_lst[index]}.jpg")
+        self.qPixmapFileVar.load(f"imgs/{rps_lst[index]}.jpg")
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(224)
         self.center.setPixmap(self.qPixmapFileVar)
         self.pred=self.myModel.predict(self.img)
         print(self.pred)
+        self.R_bar.setValue(int(self.pred[0][0]*100))
+        self.S_bar.setValue(int(self.pred[0][1]*100))
+        self.P_bar.setValue(int(self.pred[0][2]*100))
         my_game=RPS_game(rps_lst[index],self.pred)
         self.score.setText(my_game.match())
 
