@@ -7,16 +7,19 @@
       </div>
       <div class="window1">title(image 가능?)</div>
       <div class="window1">
+        <div class="cam">
         <web-cam
           ref="webcam"
           :device-id="deviceId"
-          width="100rem"
+          
+          height="112rem"
           @started="onStarted"
           @stopped="onStopped"
           @error="onError"
           @cameras="onCameras"
           @camera-change="onCameraChange"
         />
+        </div>
       </div>
     </div>
 
@@ -92,19 +95,21 @@ export default {
       //   a.href = "data:image/png;base64," + this.img; //Image Base64 Goes here
       //   a.download = "Image.png"; //File name Here
       //   a.click(); //Downloaded file
-      
+
+
       let options = {
         scriptPath: "./src/my_py/",
-        args: [this.img]
+        args: [this.img.toString("str")]
       };
       PythonShell.run("run.py", options, (err, data) => {
         if (err) throw err;
 
+        console.log("this is data")
         console.log(data[0]);
         
       });
 
-      // console.log(this.img);
+      console.log(this.img);
       // this.img.download();
       
     },
@@ -149,6 +154,10 @@ export default {
   /* text-align:center; */
   justify-content: center;
 }
+.cam{
+  width:20rem;
+  height: 20rem;
+}
 .score {
   font-size: 50px;
   margin: 0 0 55px 0;
@@ -171,8 +180,8 @@ a {
   color: #42b983;
 }
 .figure {
-  width: 100%;
-  height: 100%;
+  width: 224rem;
+  height: 224rem;
   margin: 0;
 }
 </style>
