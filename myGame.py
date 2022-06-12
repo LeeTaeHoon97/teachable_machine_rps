@@ -9,13 +9,13 @@ class RPS_game:
     def match(self):
         result=""
         if self.computer==self.my_hand:
-            result="draw"
+            result="Draw"
         elif self.computer=="R" and self.my_hand=="P":
-            result="win"
+            result="Win"
         elif self.computer=="S" and self.my_hand=="R":
-            result="win"
+            result="Win"
         elif self.computer=="P" and self.my_hand=="S":
-            result="win"
+            result="Win"
         else:
-            result="lose"
+            result="Lose"
         return result
